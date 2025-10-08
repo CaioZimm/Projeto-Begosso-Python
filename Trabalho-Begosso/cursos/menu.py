@@ -1,39 +1,50 @@
 from cursos.repository import CursosDB
 from cursos.controller import CursoController
 
-db_cursos = CursosDB()
-controller = CursoController(db_cursos)
+db = CursosDB()
+controller = CursoController(db)
 
 def menu_cursos():
     while True:
-        print("\n--- Menu Cursos ---")
+        print("\n--- Menu Cursos ---\n")
         print("1. Adicionar Curso")
         print("2. Listar Cursos")
         print("3. Buscar Curso")
         print("4. Remover Curso")
-        print("0. Voltar")
-        escolha = input("Escolha: ").strip()
+        print("0. Voltar\n")
 
-        if escolha == '1':
-            cod = input("Código: ").strip()
-            nome = input("Nome: ").strip()
-            sucesso, msg = controller.adicionar_curso(cod, nome)
+        opcao = input("Escolha: ").strip()
+
+        if opcao == "1":
+            descricao = input("Descrição do curso: ").strip()
+            sucesso, msg = controller.adicionar_curso(descricao)
             print(msg)
-        elif escolha == '2':
+
+        elif opcao == "2":
             cursos = controller.listar_cursos()
-            if cursos:
-                for c in cursos:
-                    print(c)
-            else:
+            if not cursos:
                 print("Nenhum curso cadastrado.")
-        elif escolha == '3':
-            cod = input("Código: ").strip()
-            c = controller.buscar_curso(cod)
-            print(f"Encontrado: {c}" if c else "Curso não encontrado.")
-        elif escolha == '4':
-            cod = input("Código: ").strip()
-            print("Curso removido!" if controller.remover_curso(cod) else "Curso não encontrado.")
-        elif escolha == '0':
+            for curso in cursos:
+                print(curso)
+
+        elif opcao == "3":
+            try:
+                codigo = int(input("Código do curso: "))
+                curso = controller.buscar_curso(codigo)
+                print(curso if curso else "Curso não encontrado.")
+            except ValueError:
+                print("Código inválido.")
+
+        elif opcao == "4":
+            try:
+                codigo = int(input("Código do curso: "))
+                sucesso, msg = controller.remover_curso(codigo)
+                print(msg)
+            except ValueError:
+                print("Código inválido.")
+
+        elif opcao == "0":
             break
+
         else:
             print("Opção inválida.")

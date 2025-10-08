@@ -1,53 +1,67 @@
 from cursos.model import Curso
-import bisect
 
 class CursosDB:
     def __init__(self):
-        self.cursos = []
+        self.ultimo_codigo = 0
+        self.cursos = self.carregar_cursos()
 
-    def __ordenar(self):
-        self.cursos.sort(key=lambda c: c.codigocurso)
-
-    def __posicao_insercao(self, codigocurso):
-        # Retorna o índice onde o curso deveria estar
-        return bisect.bisect_left([c.codigocurso for c in self.cursos], codigocurso)
-
-    def adicionarcurso(self, curso):
-        if self.buscarcurso(curso.codigocurso):
-            return False
-        idx = self.__posicao_insercao(curso.codigocurso)
-        self.cursos.insert(idx, curso)
-        return True
-
-    def buscarcurso(self, codigocurso):
-        idx = self.__posicao_insercao(codigocurso)
-        if idx < len(self.cursos) and self.cursos[idx].codigocurso == codigocurso:
-            return self.cursos[idx]
-        return None
-
-    def removercurso(self, codigocurso):
-        idx = self.__posicao_insercao(codigocurso)
-        if idx < len(self.cursos) and self.cursos[idx].codigocurso == codigocurso:
-            del self.cursos[idx]
-            return True
-        return False
-
-    def listarcursos(self):
-        return self.cursos
-
-    def carregar_de_txt(self, caminho, limpar_antes=True):
-        if limpar_antes:
-            self.cursos = []
+    def carregar_cursos(self):
+        cursos = []
         try:
-            with open(caminho, 'r', encoding='utf-8') as f:
+            with open("txt/cursos.txt", "r", encoding="utf-8") as f:
                 for linha in f:
-                    dados = linha.strip().split('|')
-                    if len(dados) == 2:
-                        self.adicionarcurso(Curso(*dados))
+                    codigo, descricao = linha.strip().split("|")
+                    cursos.append(Curso(int(codigo), descricao))
+            cursos.sort(key=lambda c: c.codigo)
+            if cursos:
+                self.ultimo_codigo = cursos[-1].codigo
         except FileNotFoundError:
             pass
+        return cursos
 
-    def salvar_para_txt(self, caminho):
-        with open(caminho, 'w', encoding='utf-8') as f:
-            for c in self.cursos:
-                f.write(f"{c.codigocurso}|{c.nomecurso}\n")
+    def salvar_cursos(self):
+        with open("txt/cursos.txt", "w", encoding="utf-8") as f:
+            for curso in self.cursos:
+                f.write(f"{curso.codigo}|{curso.descricao}\n")
+
+    def _busca_binaria(self, codigo):
+        inicio, fim = 0, len(self.cursos) - 1
+        while inicio <= fim:
+            meio = (inicio + fim) // 2
+            atual = self.cursos[meio].codigo
+            if atual == codigo:
+                return meio
+            elif atual < codigo:
+                inicio = meio + 1
+            else:
+                fim = meio - 1
+        return -1
+
+    def adicionar_curso(self, curso: Curso):
+        if self._busca_binaria(curso.codigo) != -1:
+            return False
+
+        self.cursos.append(curso)
+        self.cursos.sort(key=lambda c: c.codigo)
+        self.ultimo_codigo = curso.codigo
+        self.salvar_cursos()
+        return True
+
+    def buscar_curso(self, codigo):
+        idx = self._busca_binaria(codigo)
+        return self.cursos[idx] if idx != -1 else None
+
+    def remover_curso(self, codigo):
+        idx = self._busca_binaria(codigo)
+        if idx == -1:
+            return False
+        del self.cursos[idx]
+        self.salvar_cursos()
+        return True
+
+    def listar_cursos(self):
+        return self.cursos[:]
+
+    def novo_codigo(self):
+        self.ultimo_codigo += 1
+        return self.ultimo_codigo

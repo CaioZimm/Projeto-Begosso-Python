@@ -1,12 +1,14 @@
 from cidades.repository import CidadesDB
 from cidades.controller import CidadeController
+from utils.ui import limpar_tela
 
 db = CidadesDB()
 controller = CidadeController(db)
 
 def menu_cidades():
     while True:
-        print("\n--- Menu Cidades ---")
+        limpar_tela()
+        print("\n--- Menu Cidades ---\n")
         print("1. Adicionar Cidade")
         print("2. Listar Cidades")
         print("3. Buscar Cidade")

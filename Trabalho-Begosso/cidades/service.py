@@ -8,16 +8,22 @@ class CidadeService:
     def validar_cidade(self, descricao, estado):
         if not descricao or not estado:
             return False, "Descrição e Estado são obrigatórios."
-        return True, "Validação bem-sucedida"
+        if len(estado.strip()) != 2:
+            return False, "Estado (UF) deve conter apenas 2 letras."
+        return True, "Validação OK."
 
     def adicionar_cidade(self, descricao, estado):
         valido, msg = self.validar_cidade(descricao, estado)
         if not valido:
             return False, msg
 
-        cidade = Cidade(self.db.novo_codigo(), descricao, estado)
-        return self.db.adicionar_cidade(cidade), f"Cidade de '{descricao}' com código {self.db.novo_codigo()} adicionada com sucesso!"
-    
+        codigo = self.db.novo_codigo()
+        cidade = Cidade(codigo, descricao.strip(), estado.strip().upper())
+        sucesso = self.db.adicionar_cidade(cidade)
+        if sucesso:
+            return True, f"Cidade {descricao} - código {codigo} adicionada com sucesso!"
+        return False, "Erro: código duplicado."
+
     def remover_cidade(self, codigo):
         cidade = self.db.buscar_cidade(codigo)
         if not cidade:
@@ -25,6 +31,5 @@ class CidadeService:
 
         sucesso = self.db.remover_cidade(codigo)
         if sucesso:
-            return True, f"Cidade '{cidade.descricao}' removida com sucesso!"
-        else:
-            return False, "Erro ao remover a cidade."
+            return True, f"Cidade {cidade.descricao} - {cidade.codigo} removida com sucesso!"
+        return False, "Erro ao remover a cidade."

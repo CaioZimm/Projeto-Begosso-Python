@@ -1,29 +1,17 @@
-from alunos.repository import AlunosDB
-from alunos.model import Aluno
+from alunos.service import AlunoService
 
 class AlunoController:
-    def __init__(self, db_alunos: AlunosDB):
-        self.db = db_alunos
+    def __init__(self, db):
+        self.service = AlunoService(db)
 
-    def adicionar_aluno(self, nome, curso, cidade):
-        codigo = self.db.novo_codigo()
-        if self.db.buscaraluno(codigo):
-            return False, "Código já existe."
-        novo = Aluno(codigo, nome, curso, cidade)
-        sucesso = self.db.adicionaraluno(novo)
-        return sucesso, "Aluno adicionado com sucesso!" if sucesso else "Erro ao adicionar aluno."
+    def adicionar_aluno(self, nome, cod_curso, cod_cidade):
+        return self.service.adicionar_aluno(nome, cod_curso, cod_cidade)
 
     def listar_alunos(self):
-        return self.db.listaralunos()
+        return self.service.listar_alunos_completo()
 
     def buscar_aluno(self, codigo):
-        return self.db.buscaraluno(codigo)
+        return self.service.buscar_aluno_completo(codigo)
 
     def remover_aluno(self, codigo):
-        return self.db.removeraluno(codigo)
-
-    def listar_cursos(self):
-        return self.db.listar_cursos()
-
-    def listar_cidades(self):
-        return self.db.listar_cidades()
+        return self.service.remover_aluno(codigo)

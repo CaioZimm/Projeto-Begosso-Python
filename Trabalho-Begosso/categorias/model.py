@@ -1,8 +1,7 @@
-class Cidade:
-    def __init__(self, codigo, descricao, estado):
+class Categoria:
+    def __init__(self, codigo, descricao):
         self.codigo = codigo
         self.descricao = descricao
-        self.estado = estado
 
     def __lt__(self, other):
         return self.codigo < other.codigo
@@ -11,4 +10,4 @@ class Cidade:
         return self.codigo == other.codigo
 
     def __repr__(self):
-        return f"{self.codigo} - {self.descricao} ({self.estado})"
+        return f"{self.codigo} - {self.descricao}"

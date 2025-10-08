@@ -1,25 +1,17 @@
-from autores.repository import AutoresDB
-from autores.model import Autor
+from autores.service import AutorService
 
 class AutorController:
-    def __init__(self, db_autores: AutoresDB, cidade_controller):
-        self.db = db_autores
-        self.cidade_controller = cidade_controller  # Para validar cidades
+    def __init__(self, db):
+        self.service = AutorService(db)
 
     def adicionar_autor(self, nome, cod_cidade):
-        if not self.cidade_controller.buscar_cidade(int(cod_cidade)):
-            return False, "Código de cidade inválido."
-
-        codigo = self.db.novo_codigo()
-        autor = Autor(codigo, nome, cod_cidade)
-        sucesso = self.db.adicionar_autor(autor)
-        return sucesso, f"Autor adicionado com código {codigo}" if sucesso else "Erro ao adicionar autor."
+        return self.service.adicionar_autor(nome, cod_cidade)
 
     def listar_autores(self):
-        return self.db.listar_autores()
+        return self.service.listar_autores_completo()
 
     def buscar_autor(self, codigo):
-        return self.db.buscar_autor(codigo)
+        return self.service.buscar_autor_completo(codigo)
 
     def remover_autor(self, codigo):
-        return self.db.remover_autor(codigo)
+        return self.service.remover_autor(codigo)

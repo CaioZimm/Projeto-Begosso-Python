@@ -1,43 +1,66 @@
 from alunos.model import Aluno
-import bisect
 
 class AlunosDB:
     def __init__(self):
-        self.alunos = []
-        self.cursos = {'1': 'Curso A', '2': 'Curso B'}
-        self.cidades = {'1': 'Cidade X', '2': 'Cidade Y'}
-        self.ultimo_codigo = 1000
-    
-    def adicionaraluno(self, aluno):
-        index = bisect.bisect_left(self.alunos, aluno)
-        if index < len(self.alunos) and self.alunos[index].codigo == aluno.codigo:
+        self.ultimo_codigo = 0
+        self.alunos = self.carregar_alunos()
+
+    def carregar_alunos(self):
+        alunos = []
+        try:
+            with open("txt/alunos.txt", "r", encoding="utf-8") as f:
+                for linha in f:
+                    codigo, nome, cod_curso, cod_cidade = linha.strip().split("|")
+                    alunos.append(Aluno(int(codigo), nome, int(cod_curso), int(cod_cidade)))
+            alunos.sort(key=lambda a: a.codigo)
+            if alunos:
+                self.ultimo_codigo = alunos[-1].codigo
+        except FileNotFoundError:
+            pass
+        return alunos
+
+    def salvar_alunos(self):
+        with open("txt/alunos.txt", "w", encoding="utf-8") as f:
+            for aluno in self.alunos:
+                f.write(f"{aluno.codigo}|{aluno.nome}|{aluno.cod_curso}|{aluno.cod_cidade}\n")
+
+    def _busca_binaria(self, codigo):
+        inicio, fim = 0, len(self.alunos) - 1
+        while inicio <= fim:
+            meio = (inicio + fim) // 2
+            atual = self.alunos[meio].codigo
+            if atual == codigo:
+                return meio
+            elif atual < codigo:
+                inicio = meio + 1
+            else:
+                fim = meio - 1
+        return -1
+
+    def adicionar_aluno(self, aluno: Aluno):
+        if self._busca_binaria(aluno.codigo) != -1:
             return False
-        self.alunos.insert(index, aluno)
+
+        self.alunos.append(aluno)
+        self.alunos.sort(key=lambda a: a.codigo)
         self.ultimo_codigo = aluno.codigo
+        self.salvar_alunos()
         return True
 
-    def buscaraluno(self, codigo: str):
-        fake = Aluno(codigo, "", "", "")
-        index = bisect.bisect_left(self.alunos, fake)
-        if index < len(self.alunos) and self.alunos[index].codigo == codigo:
-            return self.alunos[index]
-        return None
+    def buscar_aluno(self, codigo):
+        idx = self._busca_binaria(codigo)
+        return self.alunos[idx] if idx != -1 else None
 
-    def removeraluno(self, codigo: str):
-        aluno = self.buscaraluno(codigo)
-        if aluno:
-            self.alunos.remove(aluno)
-            return True
-        return False
+    def remover_aluno(self, codigo):
+        idx = self._busca_binaria(codigo)
+        if idx == -1:
+            return False
+        del self.alunos[idx]
+        self.salvar_alunos()
+        return True
 
-    def listaralunos(self):
+    def listar_alunos(self):
         return self.alunos[:]
-
-    def listar_cursos(self):
-        return self.cursos
-
-    def listar_cidades(self):
-        return self.cidades
 
     def novo_codigo(self):
         self.ultimo_codigo += 1

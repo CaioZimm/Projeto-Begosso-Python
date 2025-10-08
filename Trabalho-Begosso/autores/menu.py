@@ -1,57 +1,76 @@
 from autores.repository import AutoresDB
 from autores.controller import AutorController
 from cidades.repository import CidadesDB
-from cidades.controller import CidadeController
+from utils.ui import limpar_tela
 
-db_cidades = CidadesDB()
-controller_cidades = CidadeController(db_cidades)
-db_autores = AutoresDB()
-controller_autores = AutorController(db_autores, controller_cidades)
+db = AutoresDB()
+controller = AutorController(db)
+cidades_db = CidadesDB()
 
 def menu_autores():
     while True:
-        print("\n--- Menu Autores ---")
+        limpar_tela()
+        print("\n--- Menu Autores ---\n")
         print("1. Adicionar Autor")
         print("2. Listar Autores")
         print("3. Buscar Autor")
         print("4. Remover Autor")
-        print("0. Voltar")
+        print("0. Voltar\n")
 
         opcao = input("Escolha: ").strip()
 
         if opcao == "1":
-            nome = input("Nome: ")
+            cidades = cidades_db.listar_cidades()
 
-            cidades = controller_cidades.listar_cidades()
             if not cidades:
-                print("Nenhuma cidade cadastrada. Cadastre uma cidade primeiro.")
+                print("Precisa cadastrar uma cidade primeiro!")
+                input("\nPressione Enter para continuar...")
                 continue
 
-            print("Cidades disponíveis:")
-            for cidade in cidades:
-                print(cidade)
+            print("\n--- Cidades Disponíveis ---")
+            for c in cidades:
+                print(f"{c.codigo} - {c.descricao} ({c.estado})")
 
-            cod_cidade = input("Código da cidade: ")
-
-            sucesso, msg = controller_autores.adicionar_autor(nome, cod_cidade)
-            print(msg)
+            try:
+                nome = input("\nNome do autor: ").strip()
+                cod_cidade = int(input("Código da cidade: "))
+                sucesso, msg = controller.adicionar_autor(nome, cod_cidade)
+                print(msg)
+            except ValueError:
+                print("Código inválido! Retornando ao menu.")
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "2":
-            autores = controller_autores.listar_autores()
-            for a in autores:
-                print(a)
+            autores = controller.listar_autores()
+            if not autores:
+                print("Nenhum autor cadastrado.")
+            else:
+                for a in autores:
+                    print(a)
+                    print("-" * 40)
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "3":
-            codigo = int(input("Código do autor: "))
-            autor = controller_autores.buscar_autor(codigo)
-            print(autor if autor else "Autor não encontrado.")
+            try:
+                codigo = int(input("Código do autor: "))
+                autor = controller.buscar_autor(codigo)
+                print(autor if autor else "Autor não encontrado.")
+            except ValueError:
+                print("Código inválido.")
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "4":
-            codigo = int(input("Código do autor: "))
-            print("Removido!" if controller_autores.remover_autor(codigo) else "Autor não encontrado.")
+            try:
+                codigo = int(input("Código do autor: "))
+                sucesso, msg = controller.remover_autor(codigo)
+                print(msg)
+            except ValueError:
+                print("Código inválido.")
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "0":
             break
 
         else:
             print("Opção inválida.")
+            input("\nPressione Enter para continuar...")
