@@ -5,6 +5,7 @@ from autores.menu import menu_autores
 from cidades.menu import menu_cidades
 from categorias.menu import menu_categorias
 from livros.menu import menu_livros
+from emprestimos.menu import menu_emprestimos
 from utils.ui import limpar_tela
 
 def menu():
@@ -17,6 +18,7 @@ def menu():
         print("4. Gerenciar Autores")
         print("5. Gerenciar Categorias")
         print("6. Gerenciar Livros")
+        print("7. Gerenciar Livros")
         print("0. Sair\n")
 
         escolha = input("Escolha: ").strip()
@@ -32,6 +34,8 @@ def menu():
             menu_categorias()
         elif escolha == '6':
             menu_livros()
+        elif escolha == '7':
+            menu_emprestimos()
             
         elif escolha == '0':
             print("Saindo...\n")

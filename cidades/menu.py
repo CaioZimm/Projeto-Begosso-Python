@@ -18,30 +18,24 @@ def menu_cidades():
         opcao = input("Escolha: ").strip()
 
         if opcao == "1":
-            descricao = input("Descrição: ")
-            estado = input("Estado (UF): ")
-            sucesso, msg = controller.adicionar_cidade(descricao, estado)
-            print(msg)
+            controller.adicionar_cidade()
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "2":
-            cidades = controller.listar_cidades()
-            if not cidades:
-                print("Nenhuma cidade cadastrada.")
-            for cidade in cidades:
-                print(cidade)
+            controller.listar_cidades()
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "3":
-            codigo = int(input("Código da cidade: "))
-            cidade = controller.buscar_cidade(codigo)
-            print(cidade if cidade else "Cidade não encontrada.")
+            controller.buscar_cidade()
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "4":
-            codigo = int(input("Código da cidade: "))
-            sucesso, msg = controller.remover_cidade(codigo)
-            print(msg)
+            controller.remover_cidade()
+            input("\nPressione Enter para continuar...")
 
         elif opcao == "0":
             break
 
         else:
             print("Opção inválida.")
+            input("\nPressione Enter para continuar...")

@@ -1,11 +1,13 @@
 from cursos.repository import CursosDB
 from cursos.controller import CursoController
+from utils.ui import limpar_tela
 
 db = CursosDB()
 controller = CursoController(db)
 
 def menu_cursos():
     while True:
+        limpar_tela()
         print("\n--- Menu Cursos ---\n")
         print("1. Adicionar Curso")
         print("2. Listar Cursos")

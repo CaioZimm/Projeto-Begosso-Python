@@ -4,14 +4,32 @@ class CidadeController:
     def __init__(self, db):
         self.service = CidadeService(db)
 
-    def adicionar_cidade(self, descricao, estado):
-        return self.service.adicionar_cidade(descricao, estado)
+    def adicionar_cidade(self):
+        descricao = input("Descrição: ").strip()
+        estado = input("Estado (UF): ").strip()
+        sucesso, msg = self.service.adicionar_cidade(descricao, estado)
+        print(msg)
 
     def listar_cidades(self):
-        return self.service.db.listar_cidades()
+        cidades = self.service.db.listar_cidades()
+        if not cidades:
+            print("Nenhuma cidade cadastrada.")
+        else:
+            for cidade in cidades:
+                print(cidade)
 
-    def buscar_cidade(self, codigo):
-        return self.service.db.buscar_cidade(codigo)
+    def buscar_cidade(self):
+        try:
+            codigo = int(input("Código da cidade: "))
+            cidade = self.service.db.buscar_cidade(codigo)
+            print(cidade if cidade else "Cidade não encontrada.")
+        except ValueError:
+            print("Código inválido.")
 
-    def remover_cidade(self, codigo):
-        return self.service.remover_cidade(codigo)
+    def remover_cidade(self):
+        try:
+            codigo = int(input("Código da cidade: "))
+            sucesso, msg = self.service.remover_cidade(codigo)
+            print(msg)
+        except ValueError:
+            print("Código inválido.")

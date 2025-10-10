@@ -1,4 +1,5 @@
 from cidades.model import Cidade
+from utils.busca import busca_binaria
 
 class CidadesDB:
     def __init__(self):
@@ -8,7 +9,7 @@ class CidadesDB:
     def carregar_cidades(self):
         cidades = []
         try:
-            with open("txt/cidades.txt", "r") as f:
+            with open("txt/cidades.txt", "r", encoding="utf-8") as f:
                 for linha in f:
                     codigo, descricao, estado = linha.strip().split("|")
                     cidades.append(Cidade(int(codigo), descricao, estado))
@@ -20,25 +21,12 @@ class CidadesDB:
         return cidades
 
     def salvar_cidades(self):
-        with open("txt/cidades.txt", "w") as f:
+        with open("txt/cidades.txt", "w", encoding="utf-8") as f:
             for cidade in self.cidades:
                 f.write(f"{cidade.codigo}|{cidade.descricao}|{cidade.estado}\n")
 
-    def _busca_binaria(self, codigo):
-        inicio, fim = 0, len(self.cidades) - 1
-        while inicio <= fim:
-            meio = (inicio + fim) // 2
-            atual = self.cidades[meio].codigo
-            if atual == codigo:
-                return meio
-            elif atual < codigo:
-                inicio = meio + 1
-            else:
-                fim = meio - 1
-        return -1
-
     def adicionar_cidade(self, cidade: Cidade):
-        if self._busca_binaria(cidade.codigo) != -1:
+        if busca_binaria(self.cidades, cidade.codigo) != -1:
             return False
 
         self.cidades.append(cidade)
@@ -48,14 +36,14 @@ class CidadesDB:
         return True
 
     def buscar_cidade(self, codigo):
-        idx = self._busca_binaria(codigo)
-        return self.cidades[idx] if idx != -1 else None
+        index = busca_binaria(self.cidades, codigo)
+        return self.cidades[index] if index != -1 else None
 
     def remover_cidade(self, codigo):
-        idx = self._busca_binaria(codigo)
-        if idx == -1:
+        index = busca_binaria(self.cidades, codigo)
+        if index == -1:
             return False
-        del self.cidades[idx]
+        del self.cidades[index]
         self.salvar_cidades()
         return True
 
