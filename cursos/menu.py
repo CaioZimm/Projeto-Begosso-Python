@@ -18,35 +18,17 @@ def menu_cursos():
         opcao = input("Escolha: ").strip()
 
         if opcao == "1":
-            descricao = input("Descrição do curso: ").strip()
-            sucesso, msg = controller.adicionar_curso(descricao)
-            print(msg)
-
+            controller.adicionar_curso()
         elif opcao == "2":
-            cursos = controller.listar_cursos()
-            if not cursos:
-                print("Nenhum curso cadastrado.")
-            for curso in cursos:
-                print(curso)
-
+            controller.listar_cursos()
         elif opcao == "3":
-            try:
-                codigo = int(input("Código do curso: "))
-                curso = controller.buscar_curso(codigo)
-                print(curso if curso else "Curso não encontrado.")
-            except ValueError:
-                print("Código inválido.")
-
+            controller.buscar_curso()
         elif opcao == "4":
-            try:
-                codigo = int(input("Código do curso: "))
-                sucesso, msg = controller.remover_curso(codigo)
-                print(msg)
-            except ValueError:
-                print("Código inválido.")
+            controller.remover_curso()
 
         elif opcao == "0":
             break
-
         else:
             print("Opção inválida.")
+
+        input("\nPressione Enter para continuar...")

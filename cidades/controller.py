@@ -19,17 +19,9 @@ class CidadeController:
                 print(cidade)
 
     def buscar_cidade(self):
-        try:
-            codigo = int(input("Código da cidade: "))
-            cidade = self.service.db.buscar_cidade(codigo)
-            print(cidade if cidade else "Cidade não encontrada.")
-        except ValueError:
-            print("Código inválido.")
+        sucesso, msg = self.service.buscar_cidade()
+        print(msg)
 
     def remover_cidade(self):
-        try:
-            codigo = int(input("Código da cidade: "))
-            sucesso, msg = self.service.remover_cidade(codigo)
-            print(msg)
-        except ValueError:
-            print("Código inválido.")
+        sucesso, msg = self.service.remover_cidade()
+        print(msg)

@@ -9,11 +9,10 @@ class CidadesDB:
     def carregar_cidades(self):
         cidades = []
         try:
-            with open("txt/cidades.txt", "r", encoding="utf-8") as f:
+            with open("txt/cidades.txt", "r") as f:
                 for linha in f:
                     codigo, descricao, estado = linha.strip().split("|")
                     cidades.append(Cidade(int(codigo), descricao, estado))
-            cidades.sort(key=lambda c: c.codigo)
             if cidades:
                 self.ultimo_codigo = cidades[-1].codigo
         except FileNotFoundError:
@@ -21,7 +20,7 @@ class CidadesDB:
         return cidades
 
     def salvar_cidades(self):
-        with open("txt/cidades.txt", "w", encoding="utf-8") as f:
+        with open("txt/cidades.txt", "w") as f:
             for cidade in self.cidades:
                 f.write(f"{cidade.codigo}|{cidade.descricao}|{cidade.estado}\n")
 
@@ -30,7 +29,6 @@ class CidadesDB:
             return False
 
         self.cidades.append(cidade)
-        self.cidades.sort(key=lambda c: c.codigo)
         self.ultimo_codigo = cidade.codigo
         self.salvar_cidades()
         return True

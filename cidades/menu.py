@@ -19,23 +19,16 @@ def menu_cidades():
 
         if opcao == "1":
             controller.adicionar_cidade()
-            input("\nPressione Enter para continuar...")
-
         elif opcao == "2":
             controller.listar_cidades()
-            input("\nPressione Enter para continuar...")
-
         elif opcao == "3":
             controller.buscar_cidade()
-            input("\nPressione Enter para continuar...")
-
         elif opcao == "4":
             controller.remover_cidade()
-            input("\nPressione Enter para continuar...")
-
+            
         elif opcao == "0":
             break
-
         else:
             print("Opção inválida.")
-            input("\nPressione Enter para continuar...")
+
+        input("\nPressione Enter para continuar...")

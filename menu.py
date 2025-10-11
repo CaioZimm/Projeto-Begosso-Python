@@ -18,7 +18,7 @@ def menu():
         print("4. Gerenciar Autores")
         print("5. Gerenciar Categorias")
         print("6. Gerenciar Livros")
-        print("7. Gerenciar Livros")
+        print("7. Gerenciar Empréstimos")
         print("0. Sair\n")
 
         escolha = input("Escolha: ").strip()
