@@ -31,6 +31,8 @@ class CidadesDB:
         self.cidades.append(cidade)
         self.ultimo_codigo = cidade.codigo
         self.salvar_cidades()
+
+        self.cidades = self.carregar_cidades()
         return True
 
     def buscar_cidade(self, codigo):

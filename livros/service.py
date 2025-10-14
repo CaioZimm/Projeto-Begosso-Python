@@ -11,7 +11,6 @@ class LivroService:
         self.categorias_db = CategoriasDB()
         self.cidades_db = CidadesDB()
 
-    # --- Validação e Criação ---
     def validar_dados(self, titulo, cod_autor, cod_categoria, ano_publicacao):
         if not titulo.strip():
             return False, "O título é obrigatório."
@@ -27,7 +26,7 @@ class LivroService:
             return False, "Código de autor inválido."
         if not categoria:
             return False, "Código de categoria inválido."
-        return True, "Validação OK."
+        return True, "Validação correta"
 
     def adicionar_livro(self, titulo, cod_autor, cod_categoria, ano_publicacao):
         valido, msg = self.validar_dados(titulo, cod_autor, cod_categoria, ano_publicacao)
@@ -38,8 +37,8 @@ class LivroService:
         livro = Livro(codigo, titulo.strip(), cod_autor, cod_categoria, int(ano_publicacao))
         sucesso = self.db.adicionar_livro(livro)
         if sucesso:
-            return True, f"Livro '{titulo}' adicionado com sucesso! (Código: {codigo})"
-        return False, "Erro ao adicionar livro."
+            return True, f"Livro {titulo} - código {codigo} adicionado com sucesso!"
+        return False, "Error"
 
     def remover_livro(self, codigo):
         livro = self.db.buscar_livro(codigo)
@@ -47,10 +46,9 @@ class LivroService:
             return False, "Livro não encontrado."
         sucesso = self.db.remover_livro(codigo)
         if sucesso:
-            return True, f"Livro '{livro.titulo}' removido com sucesso!"
-        return False, "Erro ao remover o livro."
+            return True, f"Livro {livro.titulo} - {livro.codigo} removido com sucesso!"
+        return False, "Error"
 
-    # --- Consultas com Join ---
     def listar_livros_completo(self):
         livros = self.db.listar_livros()
         resultado = []

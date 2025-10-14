@@ -1,5 +1,5 @@
 class Livro:
-    def __init__(self, codigo, titulo, cod_autor, cod_categoria, ano_publicacao, disponibilidade: str = "disponível"):
+    def __init__(self, codigo, titulo, cod_autor, cod_categoria, ano_publicacao, disponibilidade="disponível"):
         self.codigo = codigo
         self.titulo = titulo
         self.cod_autor = cod_autor
@@ -14,4 +14,4 @@ class Livro:
         return self.codigo == other.codigo
 
     def __repr__(self):
-        return f"{self.codigo} - {self.titulo} ({self.ano_publicacao}) [{self.disponibilidade}]"
+        return f"{self.codigo} - {self.titulo} ({self.ano_publicacao}) - {self.disponibilidade}"

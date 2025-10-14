@@ -29,4 +29,5 @@ def menu_autores():
 
         else:
             print("Opção inválida.")
+            
         input("\nPressione Enter para continuar...")

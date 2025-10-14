@@ -14,7 +14,6 @@ class AlunoController:
 
         if not cursos or not cidades:
             print("Precisa cadastrar uma cidade e um curso primeiro!")
-            input("\nPressione Enter para continuar...")
             return
 
         nome = input("Nome do aluno: ").strip()

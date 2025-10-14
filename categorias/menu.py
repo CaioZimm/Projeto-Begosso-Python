@@ -18,41 +18,18 @@ def menu_categorias():
         opcao = input("Escolha: ").strip()
 
         if opcao == "1":
-            descricao = input("Descrição da categoria: ").strip()
-            sucesso, msg = controller.adicionar_categoria(descricao)
-            print(msg)
-            input("\nPressione Enter para continuar...")
-
+            controller.adicionar_categoria()
         elif opcao == "2":
-            categorias = controller.listar_categorias()
-            if not categorias:
-                print("Nenhuma categoria cadastrada.")
-            else:
-                for c in categorias:
-                    print(c)
-            input("\nPressione Enter para continuar...")
-
+            controller.listar_categorias()
         elif opcao == "3":
-            try:
-                codigo = int(input("Código da categoria: "))
-                categoria = controller.buscar_categoria(codigo)
-                print(categoria if categoria else "Categoria não encontrada.")
-            except ValueError:
-                print("Código inválido.")
-            input("\nPressione Enter para continuar...")
-
+            controller.buscar_categoria()
         elif opcao == "4":
-            try:
-                codigo = int(input("Código da categoria: "))
-                sucesso, msg = controller.remover_categoria(codigo)
-                print(msg)
-            except ValueError:
-                print("Código inválido.")
-            input("\nPressione Enter para continuar...")
-
+            controller.remover_categoria()
+            
         elif opcao == "0":
             break
 
         else:
             print("Opção inválida.")
-            input("\nPressione Enter para continuar...")
+
+        input("\nPressione Enter para continuar...")

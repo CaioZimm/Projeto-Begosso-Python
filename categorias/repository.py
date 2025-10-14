@@ -1,4 +1,5 @@
 from categorias.model import Categoria
+from utils.busca import busca_binaria
 
 class CategoriasDB:
     def __init__(self):
@@ -12,7 +13,6 @@ class CategoriasDB:
                 for linha in f:
                     codigo, descricao = linha.strip().split("|")
                     categorias.append(Categoria(int(codigo), descricao))
-            categorias.sort(key=lambda c: c.codigo)
             if categorias:
                 self.ultimo_codigo = categorias[-1].codigo
         except FileNotFoundError:
@@ -24,37 +24,23 @@ class CategoriasDB:
             for categoria in self.categorias:
                 f.write(f"{categoria.codigo}|{categoria.descricao}\n")
 
-    def _busca_binaria(self, codigo):
-        inicio, fim = 0, len(self.categorias) - 1
-        while inicio <= fim:
-            meio = (inicio + fim) // 2
-            atual = self.categorias[meio].codigo
-            if atual == codigo:
-                return meio
-            elif atual < codigo:
-                inicio = meio + 1
-            else:
-                fim = meio - 1
-        return -1
-
     def adicionar_categoria(self, categoria: Categoria):
-        if self._busca_binaria(categoria.codigo) != -1:
+        if busca_binaria(self.categorias, categoria.codigo) != -1:
             return False
         self.categorias.append(categoria)
-        self.categorias.sort(key=lambda c: c.codigo)
         self.ultimo_codigo = categoria.codigo
         self.salvar_categorias()
         return True
 
     def buscar_categoria(self, codigo):
-        idx = self._busca_binaria(codigo)
-        return self.categorias[idx] if idx != -1 else None
+        index = busca_binaria(self.categorias, codigo)
+        return self.categorias[index] if index != -1 else None
 
     def remover_categoria(self, codigo):
-        idx = self._busca_binaria(codigo)
-        if idx == -1:
+        index = busca_binaria(self.categorias, codigo)
+        if index == -1:
             return False
-        del self.categorias[idx]
+        del self.categorias[index]
         self.salvar_categorias()
         return True
 
