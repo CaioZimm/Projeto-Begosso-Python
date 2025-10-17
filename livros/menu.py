@@ -1,11 +1,9 @@
-from livros.repository import LivrosDB
 from livros.controller import LivroController
 from utils.ui import limpar_tela
 
-db = LivrosDB()
-controller = LivroController(db)
+def menu_livros(livros_db, autores_db, categorias_db, cidades_db):
+    controller = LivroController(livros_db, autores_db, categorias_db, cidades_db)
 
-def menu_livros():
     while True:
         limpar_tela()
         print("\n--- Menu Livros ---\n")

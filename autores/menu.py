@@ -1,9 +1,9 @@
 from autores.controller import AutorController
 from utils.ui import limpar_tela
 
-controller = AutorController()
+def menu_autores(autores_db, cidades_db):
+    controller = AutorController(autores_db, cidades_db)
 
-def menu_autores():
     while True:
         limpar_tela()
         print("\n--- Menu Autores ---\n")
@@ -23,11 +23,9 @@ def menu_autores():
             controller.buscar_autor()
         elif opcao == "4":
             controller.remover_autor()
-
         elif opcao == "0":
             break
-
         else:
             print("Opção inválida.")
-            
+
         input("\nPressione Enter para continuar...")

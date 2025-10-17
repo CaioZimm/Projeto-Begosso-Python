@@ -2,10 +2,9 @@ from cidades.repository import CidadesDB
 from cidades.controller import CidadeController
 from utils.ui import limpar_tela
 
-db = CidadesDB()
-controller = CidadeController(db)
+def menu_cidades(cidades_db):
+    controller = CidadeController(cidades_db)
 
-def menu_cidades():
     while True:
         limpar_tela()
         print("\n--- Menu Cidades ---\n")

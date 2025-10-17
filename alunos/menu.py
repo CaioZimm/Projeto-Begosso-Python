@@ -1,15 +1,9 @@
-from alunos.repository import AlunosDB
 from alunos.controller import AlunoController
-from cursos.repository import CursosDB
-from cidades.repository import CidadesDB
 from utils.ui import limpar_tela
 
-db = AlunosDB()
-controller = AlunoController(db)
-cursos_db = CursosDB()
-cidades_db = CidadesDB()
+def menu_alunos(alunos_db, cursos_db, cidades_db):
+    controller = AlunoController(alunos_db, cursos_db, cidades_db)
 
-def menu_alunos():
     while True:
         limpar_tela()
         print("\n--- Menu Alunos ---\n")

@@ -1,11 +1,9 @@
-from categorias.repository import CategoriasDB
 from categorias.controller import CategoriaController
 from utils.ui import limpar_tela
 
-db = CategoriasDB()
-controller = CategoriaController(db)
+def menu_categorias(categorias_db):
+    controller = CategoriaController(categorias_db)
 
-def menu_categorias():
     while True:
         limpar_tela()
         print("\n--- Menu Categorias ---\n")
