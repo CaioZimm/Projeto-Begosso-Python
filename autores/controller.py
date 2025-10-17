@@ -2,9 +2,9 @@ from autores.service import AutorService
 from cidades.repository import CidadesDB
 
 class AutorController:
-    def __init__(self):
-        self.service = AutorService()
-        self.cidades_db = CidadesDB()
+    def __init__(self, autores_db, cidades_db):
+        self.service = AutorService(autores_db, cidades_db)
+        self.cidades_db = cidades_db
 
     def adicionar_autor(self):
         cidades = self.cidades_db.listar_cidades()

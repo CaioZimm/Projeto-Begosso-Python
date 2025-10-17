@@ -4,9 +4,9 @@ from autores.model import Autor
 from utils.validation_input import ler_codigo
 
 class AutorService:
-    def __init__(self):
-        self.db = AutoresDB()
-        self.cidades_db = CidadesDB()
+    def __init__(self, autores_db: AutoresDB, cidades_db: CidadesDB):
+        self.db = autores_db
+        self.cidades_db = cidades_db
 
     def validar_dados(self, nome, cod_cidade):
         if not nome.strip():

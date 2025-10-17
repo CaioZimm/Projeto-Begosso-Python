@@ -1,14 +1,11 @@
 from alunos.model import Aluno
-from alunos.repository import AlunosDB
-from cursos.repository import CursosDB
-from cidades.repository import CidadesDB
 from utils.validation_input import ler_codigo
 
 class AlunoService:
-    def __init__(self, db: AlunosDB):
-        self.db = db
-        self.cursos_db = CursosDB()
-        self.cidades_db = CidadesDB()
+    def __init__(self, alunos_db, cursos_db, cidades_db):
+        self.db = alunos_db
+        self.cursos_db = cursos_db
+        self.cidades_db = cidades_db
 
     def validar_dados(self, nome, cod_curso, cod_cidade):
         if not nome.strip():

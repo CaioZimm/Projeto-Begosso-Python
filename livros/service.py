@@ -5,11 +5,11 @@ from categorias.repository import CategoriasDB
 from cidades.repository import CidadesDB
 
 class LivroService:
-    def __init__(self, db: LivrosDB):
-        self.db = db
-        self.autores_db = AutoresDB()
-        self.categorias_db = CategoriasDB()
-        self.cidades_db = CidadesDB()
+    def __init__(self, livros_db: LivrosDB, autores_db, categorias_db, cidades_db):
+        self.db = livros_db
+        self.autores_db = autores_db
+        self.categorias_db = categorias_db
+        self.cidades_db = cidades_db
 
     def validar_dados(self, titulo, cod_autor, cod_categoria, ano_publicacao):
         if not titulo.strip():

@@ -1,14 +1,12 @@
 from livros.service import LivroService
-from autores.repository import AutoresDB
-from categorias.repository import CategoriasDB
-from cidades.repository import CidadesDB
 
 class LivroController:
-    def __init__(self, db):
-        self.service = LivroService(db)
-        self.autores_db = AutoresDB()
-        self.categorias_db = CategoriasDB()
-        self.cidades_db = CidadesDB()
+    def __init__(self, livros_db, autores_db, categorias_db, cidades_db):
+        self.service = LivroService(livros_db, autores_db, categorias_db, cidades_db)
+        self.livros_db = livros_db
+        self.autores_db = autores_db
+        self.categorias_db = categorias_db
+        self.cidades_db = cidades_db
 
     def adicionar_livro(self):
         autores = self.autores_db.listar_autores()

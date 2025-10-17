@@ -1,16 +1,12 @@
 from datetime import datetime
 from emprestimos.model import Emprestimo
-from emprestimos.repository import EmprestimosDB
-from livros.repository import LivrosDB
-from alunos.repository import AlunosDB
 
 class EmprestimoService:
-    def __init__(self, db: EmprestimosDB):
-        self.db = db
-        self.livros_db = LivrosDB()
-        self.alunos_db = AlunosDB()
+    def __init__(self, emprestimos_db, livros_db, alunos_db):
+        self.db = emprestimos_db
+        self.livros_db = livros_db
+        self.alunos_db = alunos_db
 
-    # --- Criar empréstimo ---
     def realizar_emprestimo(self, cod_livro, cod_aluno):
         livro = self.livros_db.buscar_livro(cod_livro)
         aluno = self.alunos_db.buscar_aluno(cod_aluno)
@@ -27,13 +23,11 @@ class EmprestimoService:
         emprestimo = Emprestimo(codigo, cod_livro, cod_aluno)
         self.db.adicionar_emprestimo(emprestimo)
 
-        # Atualiza disponibilidade
         livro.disponibilidade = "emprestado"
         self.livros_db.salvar_livros()
 
-        return True, f"Empréstimo registrado! Código: {codigo} | Devolução até {emprestimo.data_devolucao}"
+        return True, f"Empréstimo registrado! Código: {codigo} - Devolução até {emprestimo.data_devolucao}"
 
-    # --- Devolução ---
     def devolver_livro(self, cod_emprestimo):
         emp = self.db.buscar_emprestimo(cod_emprestimo)
         if not emp:
@@ -46,7 +40,6 @@ class EmprestimoService:
         if emp.devolvido.lower() == "sim":
             return False, "Esse livro já foi devolvido."
 
-        # Verificar atraso
         hoje = datetime.today().date()
         data_dev = datetime.strptime(emp.data_devolucao, "%d/%m/%Y").date()
         atrasado = hoje > data_dev
@@ -60,7 +53,6 @@ class EmprestimoService:
             return True, "Livro devolvido, mas estava atrasado!"
         return True, "Devolução realizada com sucesso!"
 
-    # --- Consultas ---
     def listar_emprestimos_completo(self):
         resultado = []
         livros = self.livros_db

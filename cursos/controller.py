@@ -1,8 +1,8 @@
 from cursos.service import CursoService
 
 class CursoController:
-    def __init__(self, db):
-        self.service = CursoService(db)
+    def __init__(self, cursos_db):
+        self.service = CursoService(cursos_db)
 
     def adicionar_curso(self):
         descricao = input("Descrição do curso: ").strip()

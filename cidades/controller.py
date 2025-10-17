@@ -1,8 +1,8 @@
 from cidades.service import CidadeService
 
 class CidadeController:
-    def __init__(self, db):
-        self.service = CidadeService(db)
+    def __init__(self, cidades_db):
+        self.service = CidadeService(cidades_db)
 
     def adicionar_cidade(self):
         descricao = input("Descrição: ").strip()

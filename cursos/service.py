@@ -3,8 +3,8 @@ from cursos.repository import CursosDB
 from utils.validation_input import ler_codigo
 
 class CursoService:
-    def __init__(self, db: CursosDB):
-        self.db = db
+    def __init__(self, cursos_db: CursosDB):
+        self.db = cursos_db
 
     def validar_curso(self, descricao):
         if not descricao:

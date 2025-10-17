@@ -2,9 +2,8 @@ from categorias.model import Categoria
 from categorias.repository import CategoriasDB
 
 class CategoriaService:
-    def __init__(self, db: CategoriasDB):
-        self.db = db
-        self.categorias_db = CategoriasDB()
+    def __init__(self, categorias_db: CategoriasDB):
+        self.db = categorias_db
 
     def validar_categoria(self, descricao):
         if not descricao.strip():
@@ -20,7 +19,7 @@ class CategoriaService:
         categoria = Categoria(codigo, descricao.strip())
         sucesso = self.db.adicionar_categoria(categoria)
         if sucesso:
-            return True, f"Categoria {descricao} -  código {codigo} cadastrada com sucesso!"
+            return True, f"Categoria {descricao} - código {codigo} cadastrada com sucesso!"
         return False, "Error"
 
     def remover_categoria(self, codigo):

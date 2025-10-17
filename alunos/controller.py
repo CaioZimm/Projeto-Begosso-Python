@@ -1,12 +1,10 @@
 from alunos.service import AlunoService
-from cursos.repository import CursosDB
-from cidades.repository import CidadesDB
 
 class AlunoController:
-    def __init__(self, db):
-        self.service = AlunoService(db)
-        self.cursos_db = CursosDB()
-        self.cidades_db = CidadesDB()
+    def __init__(self, alunos_db, cursos_db, cidades_db):
+        self.service = AlunoService(alunos_db, cursos_db, cidades_db)
+        self.cursos_db = cursos_db
+        self.cidades_db = cidades_db
 
     def adicionar_aluno(self):
         cursos = self.cursos_db.listar_cursos()

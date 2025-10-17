@@ -1,8 +1,8 @@
 from categorias.service import CategoriaService
 
 class CategoriaController:
-    def __init__(self, db):
-        self.service = CategoriaService(db)
+    def __init__(self, categorias_db):
+        self.service = CategoriaService(categorias_db)
 
     def adicionar_categoria(self):
         descricao = input("Descrição da categoria: ").strip()
