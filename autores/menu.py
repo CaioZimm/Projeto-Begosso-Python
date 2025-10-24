@@ -6,12 +6,12 @@ def menu_autores(autores_db, cidades_db):
 
     while True:
         limpar_tela()
-        print("\n--- Menu Autores ---\n")
-        print("1. Adicionar Autor")
-        print("2. Listar Autores")
-        print("3. Buscar Autor")
-        print("4. Remover Autor")
-        print("0. Voltar\n")
+        print("\n==== Menu Autores ====\n")
+        print("1 - Adicionar Autor")
+        print("2 - Listar Autores")
+        print("3 - Buscar Autor")
+        print("4 - Remover Autor")
+        print("0 - Voltar\n")
 
         opcao = input("Escolha: ").strip()
 

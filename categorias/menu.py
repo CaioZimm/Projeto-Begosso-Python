@@ -6,12 +6,12 @@ def menu_categorias(categorias_db):
 
     while True:
         limpar_tela()
-        print("\n--- Menu Categorias ---\n")
-        print("1. Adicionar Categoria")
-        print("2. Listar Categorias")
-        print("3. Buscar Categoria")
-        print("4. Remover Categoria")
-        print("0. Voltar\n")
+        print("\n==== Menu Categorias ====\n")
+        print("1 - Adicionar Categoria")
+        print("2 - Listar Categorias")
+        print("3 - Buscar Categoria")
+        print("4 - Remover Categoria")
+        print("0 - Voltar\n")
 
         opcao = input("Escolha: ").strip()
 

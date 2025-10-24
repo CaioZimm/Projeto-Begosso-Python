@@ -20,15 +20,15 @@ from emprestimos.menu import menu_emprestimos
 def menu(cidades_db, cursos_db, alunos_db, autores_db, categorias_db, livros_db, emprestimos_db):
     while True:
         limpar_tela()
-        print("\n---- Sistema de Biblioteca ----\n")
-        print("1. Gerenciar Cidades")
-        print("2. Gerenciar Cursos")
-        print("3. Gerenciar Alunos")
-        print("4. Gerenciar Autores")
-        print("5. Gerenciar Categorias")
-        print("6. Gerenciar Livros")
-        print("7. Gerenciar Empréstimos")
-        print("0. Sair\n")
+        print("\n==== Sistema de Biblioteca ====\n")
+        print("1 - Gerenciar Cidades")
+        print("2 - Gerenciar Cursos")
+        print("3 - Gerenciar Alunos")
+        print("4 - Gerenciar Autores")
+        print("5 - Gerenciar Categorias")
+        print("6 - Gerenciar Livros")
+        print("7 - Gerenciar Empréstimos")
+        print("0 - Sair\n")
 
         escolha = input("Escolha: ").strip()
         if escolha == '1':

@@ -7,12 +7,12 @@ def menu_cidades(cidades_db):
 
     while True:
         limpar_tela()
-        print("\n--- Menu Cidades ---\n")
-        print("1. Adicionar Cidade")
-        print("2. Listar Cidades")
-        print("3. Buscar Cidade")
-        print("4. Remover Cidade")
-        print("0. Voltar\n")
+        print("\n==== Menu Cidades ====\n")
+        print("1 - Adicionar Cidade")
+        print("2 - Listar Cidades")
+        print("3 - Buscar Cidade")
+        print("4 - Remover Cidade")
+        print("0 - Voltar\n")
 
         opcao = input("Escolha: ").strip()
 

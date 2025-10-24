@@ -6,12 +6,12 @@ def menu_livros(livros_db, autores_db, categorias_db, cidades_db):
 
     while True:
         limpar_tela()
-        print("\n--- Menu Livros ---\n")
-        print("1. Adicionar Livro")
-        print("2. Listar Livros")
-        print("3. Buscar Livro")
-        print("4. Remover Livro")
-        print("0. Voltar\n")
+        print("\n==== Menu Livros ====\n")
+        print("1 - Adicionar Livro")
+        print("2 - Listar Livros")
+        print("3 - Buscar Livro")
+        print("4 - Remover Livro")
+        print("0 - Voltar\n")
 
         opcao = input("Escolha: ").strip()
 

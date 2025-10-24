@@ -6,12 +6,12 @@ def menu_cursos(cursos_db):
 
     while True:
         limpar_tela()
-        print("\n--- Menu Cursos ---\n")
-        print("1. Adicionar Curso")
-        print("2. Listar Cursos")
-        print("3. Buscar Curso")
-        print("4. Remover Curso")
-        print("0. Voltar\n")
+        print("\n==== Menu Cursos ====\n")
+        print("1 - Adicionar Curso")
+        print("2 - Listar Cursos")
+        print("3 - Buscar Curso")
+        print("4 - Remover Curso")
+        print("0 - Voltar\n")
 
         opcao = input("Escolha: ").strip()
 

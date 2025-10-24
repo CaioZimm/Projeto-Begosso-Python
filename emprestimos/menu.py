@@ -6,12 +6,12 @@ def menu_emprestimos(emprestimos_db, livros_db, alunos_db):
 
     while True:
         limpar_tela()
-        print("\n--- Menu Empréstimos ---\n")
-        print("1. Realizar Empréstimo")
-        print("2. Registrar Devolução")
-        print("3. Listar Empréstimos")
-        print("4. Listar Livros Atrasados")
-        print("0. Voltar\n")
+        print("\n==== Menu Empréstimos ====\n")
+        print("1 - Realizar Empréstimo")
+        print("2 - Registrar Devolução")
+        print("3 - Listar Empréstimos")
+        print("4 - Listar Livros Atrasados")
+        print("0 - Voltar\n")
 
         opcao = input("Escolha: ").strip()
 
